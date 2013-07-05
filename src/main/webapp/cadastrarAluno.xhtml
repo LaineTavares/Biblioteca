@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:decorate template="/Template/template.xhtml">
+        <ui:define name="body">
+            <h:form>
+                <p:panel>
+                <p:panel style="text-align: center" header="Alunos">
+                    <p:growl />
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Digite o nome do Aluno:" for="nome"/>
+                        <h:inputText id="nome" value="#{alunoMB.aluno.nome}" maxlength="10" size="40" required="true"/>
+
+                        <h:outputLabel value="Digite o numero da matricula:" for="matricula"/>
+                        <h:inputText id="matricula" value="#{alunoMB.aluno.numMatricula}" maxlength="14" size="40"/>
+
+                        <h:outputLabel value="Digite o curso:" for="curso"/>
+                        <h:inputText id="curso" value="#{alunoMB.aluno.curso}" required="true" maxlength="14" size="40"/>
+
+                        <h:outputLabel value="Digite o período" for="periodo"/>
+                        <h:inputText id="periodo" value="#{alunoMB.aluno.periodo}" maxlength="14" size="40"/>   
+
+                        <p:commandButton value="Salvar" action="#{alunoMB.salvar()}" ajax="false" update="form"/>  
+                    </h:panelGrid>
+                </p:panel>
+            
+
+
+                <center> 
+                <h:panelGrid cellpadding="10">  
+                   <p:dataTable id="tabela" value="#{alunoMB.findAllAlunos()}" var="aluno" paginator="true" rows="5" > 
+                         <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="NOME" />
+                            </f:facet>
+                             <h:outputText value="#{aluno.nome}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="CURSO" />
+                            </f:facet>
+                            <h:outputText value="#{aluno.curso}"/>
+                        </p:column>
+                       <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="PERIODO" />
+                            </f:facet>
+                           <h:outputText value="#{aluno.periodo}"/>
+                        </p:column>
+                       <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="MATRICULA" />
+                            </f:facet>
+                           <h:outputText value="#{aluno.numMatricula}"/>
+                        </p:column>
+                    </p:dataTable>
+                        
+                                       
+                        </h:panelGrid>
+                   
+                </center>
+                </p:panel>
+            </h:form>
+        </ui:define>
+    </ui:decorate>
+</html>
+

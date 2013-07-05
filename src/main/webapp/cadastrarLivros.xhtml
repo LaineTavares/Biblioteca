@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">      
+    <ui:composition template="/Template/template.xhtml">
+        <ui:define name="body">
+            <h:form>
+                <p:panel>
+                    <p:panel style="text-align: center" header="Livros">
+                        <p:growl />
+                        <h:panelGrid columns="2">
+
+                            <h:outputLabel value="Digite o titulo do Livro:" for="titulo"/>
+                            <h:inputText id="titulo" value="#{livroMB.livro.titulo}" maxlength="40" size="40"/>
+
+                            <h:outputLabel value="Digite o genero:" for="genero"/>
+                            <h:inputText id="genero" value="#{livroMB.livro.genero}" maxlength="14" size="40"/>
+
+                            <h:outputLabel value="Digite o autor:" for="autor"/>
+                            <h:inputText id="autor" value="#{livroMB.livro.autor}"  maxlength="14" size="40"/>
+
+                            <h:outputLabel value="Digite a data do lançamento:" for="dataLancamento"/>
+                            <p:inputMask id="dataLancamento" value="#{livroMB.livro.dataDeLancamento}" maxlength="14" size="40" mask="99/99/9999"/>
+
+                            <p:commandButton value="Salvar" action="#{livroMB.salvarLivro()}" ajax="false" update="form"/>  
+                        </h:panelGrid>
+                    </p:panel>
+                </p:panel>
+                <p:panel>
+                    <center> 
+
+                        <h:panelGrid  cellpadding="10">  
+                            <p:dataTable id="tabela" value="#{livroMB.findAllLivros()}" var="livro" paginator="true" rows="5" > 
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="TITULO" />
+                                    </f:facet>
+                                    <h:outputText value="#{livro.titulo}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="AUTOR" />
+                                    </f:facet>
+                                    <h:outputText value="#{livro.autor}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="GENERO" />
+                                    </f:facet>
+                                    <h:outputText value="#{livro.genero}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="DATA DE LANCAMENTO" />
+                                    </f:facet>
+                                    <h:outputText value="#{livro.dataDeLancamento}"/>
+                                </p:column>
+
+                            </p:dataTable>
+
+
+                        </h:panelGrid>
+
+                    </center> 
+                    <!--                <h:outputText value="Selecione o livro:" />
+                                    <h:selectOneMenu value="#{livroMB.livro.id}" >
+                                        <f:selectItems value="#{livroMB.findAllLivros()}" var="livro" itemLabel="#{livro.titulo}" itemValue="#{livro.id}" />
+                                    </h:selectOneMenu>-->
+
+                    <!--                <h:panelGrid cellpadding="8" columns="2">
+                                        <p:graphicImage value="/img/eu.jpg" width="120"/>
+                                        <h:outputText value="Imagem exibida"/>            
+                                    </h:panelGrid>-->
+
+<!--                <p:carousel value="#{livroMB.findAllLivros()}" var="livro" rows="2">
+                    <h:panelGrid cellpadding="6" columns="1" width="350px" rules="groups">
+                        <h:outputText value="Titulo: #{livro.titulo}"></h:outputText>
+                        <h:outputText value="Autor: #{livro.autor}"></h:outputText>
+
+                    </h:panelGrid>
+
+                </p:carousel>-->
+                </p:panel>  
+            </h:form>   
+        </ui:define>
+    </ui:composition>
+</html>
+

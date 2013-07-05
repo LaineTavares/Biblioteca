@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:composition template="/Template/template.xhtml">
+        <ui:define name="body">
+
+
+            <h:form>
+                <p:panel>
+                    <h:panelGrid>                   
+                        <h:outputText value="Selecione o livro: " />
+
+                        <h:selectOneMenu value="#{emprestimoMB.livro.id}" >
+                            <f:selectItems value="#{livroMB.findAllLivros()}" var="livro" itemLabel="#{livro.titulo}" itemValue="#{livro.id}" />
+                        </h:selectOneMenu>
+
+                        <h:outputText value="Selececione o Aluno: " />
+
+                        <h:selectOneMenu value="#{emprestimoMB.aluno.id}">
+                            <f:selectItems value="#{alunoMB.findAllAlunos()}" var="alunos" itemLabel="#{alunos.nome}" itemValue="#{alunos.id}" />
+                        </h:selectOneMenu>
+
+                        <h:outputLabel value="Digite a data do empréstimo: " for="dataEmprestimo">
+                            <p:calendar id="dataEmprestimo" value="#{emprestimoMB.emprestimo.dataEmprestimo}" maxlength="14" size="40" />
+                        </h:outputLabel>
+
+                        <h:outputLabel value="Digite a data de Devolução:  " for="dataDevolução">
+                            <p:calendar id="dataDevolucao" value="#{emprestimoMB.emprestimo.dataDevolucao}" maxlength="14" size="40"/>
+                        </h:outputLabel>
+
+                        <p:commandButton value="Salvar" action="#{emprestimoMB.salvar()}" update="form" ajax="false"/>
+                    </h:panelGrid>
+                </p:panel>
+                <center> 
+                    <h:panelGrid  cellpadding="10">  
+                        <p:dataTable id="tabela" value="#{emprestimoMB.findAllEmprestimo()}" var="emprestimo" paginator="true" rows="5" > 
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Livro" />
+                                </f:facet>
+                                <h:outputText value="#{emprestimo.livro.titulo}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Aluno" />
+                                </f:facet>
+                                <h:outputText value="#{emprestimo.aluno.nome}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Data Emprestimo" />
+                                </f:facet>
+                                <h:outputText value="#{emprestimo.dataEmprestimo}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Data de Devolução" />
+                                </f:facet>
+                                <h:outputText value="#{emprestimo.dataDevolucao}"/>
+                            </p:column>
+                             <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Relatorio" />
+                                </f:facet>
+                                <p:commandButton value="Relatorio" type="button" onclick="dialog.show();">
+                                     
+                                    <f:setPropertyActionListener target="#{emprestimoMB.emprest}" value="#{emprest}"/>
+				</p:commandButton>
+                            </p:column>
+                            
+                        </p:dataTable>
+                        <p:dialog widgetVar="dialog" header="Relatorio"  showEffect="explode" hideEffect="bounce" height="100" >
+                            <h:outputText value="#{emprestimoMB.emprest.aluno.nome}"/>
+<!--                                      <h:outputText value="#{emprestimoMB.emprest.livro.titulo}"/>-->
+                        </p:dialog>
+                       
+                    </h:panelGrid>
+                </center>
+            </h:form>     
+        </ui:define>
+    </ui:composition>
+</html>
